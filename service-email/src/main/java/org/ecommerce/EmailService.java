@@ -1,26 +1,27 @@
 package org.ecommerce;
 
 import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.ecommerce.consumer.ConsumerService;
+import org.ecommerce.consumer.ServiceRunner;
 
-import java.io.IOException;
-import java.util.Map;
-import java.util.concurrent.ExecutionException;
+public class EmailService implements ConsumerService<String> {
 
-public class EmailService {
-
-    public static void main(String[] args) throws IOException, ExecutionException, InterruptedException {
-        var emailService = new EmailService();
-        try(var service = new KafkaService(
-                EmailService.class.getSimpleName(),
-                "ECOMMERCE_SEND_EMAIL",
-                emailService::parse,
-                Map.of()
-        )){
-            service.run();
-        }
+    public static void main(String[] args) {
+        new ServiceRunner(EmailService::new).start(2);
     }
 
-    private void parse(ConsumerRecord<String, String> record) {
+    @Override
+    public String getConsumerGroup() {
+        return EmailService.class.getSimpleName();
+    }
+
+    @Override
+    public String getTopic() {
+        return "ECOMMERCE_SEND_EMAIL";
+    }
+
+    @Override
+    public void parse(ConsumerRecord<String, Message<String>> record) {
         System.out.println("------------------------------------------");
         System.out.println("Send email");
         System.out.println(record.key());

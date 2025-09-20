@@ -3,6 +3,7 @@ package org.ecommerce;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.common.serialization.StringDeserializer;
+import org.ecommerce.consumer.KafkaService;
 
 import java.io.IOException;
 import java.util.Map;

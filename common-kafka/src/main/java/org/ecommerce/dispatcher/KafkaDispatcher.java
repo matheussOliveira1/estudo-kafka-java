@@ -1,7 +1,9 @@
-package org.ecommerce;
+package org.ecommerce.dispatcher;
 
 import org.apache.kafka.clients.producer.*;
 import org.apache.kafka.common.serialization.StringSerializer;
+import org.ecommerce.CorrelationId;
+import org.ecommerce.Message;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -33,7 +35,7 @@ public class KafkaDispatcher<T> implements Closeable {
     }
 
     public Future<RecordMetadata> sendAsync(String topic, String key, CorrelationId correlationId, T payload) {
-        var value = new Message<>(correlationId, payload);
+        var value = new Message<>(correlationId.continueWith("_" + topic), payload);
         var record = new ProducerRecord<>(topic, key, value);
         Callback callback = (data, ex) -> {
             if (ex != null) {

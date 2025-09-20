@@ -4,6 +4,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.ecommerce.dispatcher.KafkaDispatcher;
 
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;

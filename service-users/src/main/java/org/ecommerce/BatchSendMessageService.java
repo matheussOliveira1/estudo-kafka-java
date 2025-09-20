@@ -1,6 +1,8 @@
 package org.ecommerce;
 
 import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.ecommerce.consumer.KafkaService;
+import org.ecommerce.dispatcher.KafkaDispatcher;
 
 import java.io.IOException;
 import java.sql.Connection;

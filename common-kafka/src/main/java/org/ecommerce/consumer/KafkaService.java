@@ -1,8 +1,11 @@
-package org.ecommerce;
+package org.ecommerce.consumer;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.serialization.StringDeserializer;
+import org.ecommerce.Message;
+import org.ecommerce.dispatcher.GsonSerializer;
+import org.ecommerce.dispatcher.KafkaDispatcher;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -68,6 +71,7 @@ public class KafkaService<T> implements Closeable {
         properties.setProperty(ConsumerConfig.GROUP_ID_CONFIG, groupId);
         properties.setProperty(ConsumerConfig.CLIENT_ID_CONFIG, UUID.randomUUID().toString());
         properties.setProperty(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, "1");
+        properties.setProperty(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
         properties.putAll(overrideProperties);
         return properties;
     }
